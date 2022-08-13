@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
-import 'detail_page.dart';
+import 'package:housesales/pages/Register.dart';
+import 'package:housesales/pages/login_as.dart';
+import 'pages/home_page.dart';
+import 'pages/detail_page.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
-    title: "UI",
+    title: "Housing",
     home: MyApp(),
 
     // initialRoute: '/',
@@ -22,6 +24,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HomePage();
+    return const HomePage();
+    // return LoginAs();
+    // return Register();
   }
 }

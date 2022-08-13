@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../pages/login_as.dart';
+
 
 class HeaderIcons extends StatelessWidget {
   const HeaderIcons({
@@ -27,8 +29,10 @@ class HeaderIcons extends StatelessWidget {
             Spacer(),
             Card(
                 child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.settings),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginAs()));
+                  },
+                  icon: const Icon(Icons.account_box_rounded),
                   iconSize: 35.0,
                 ),
                 shape: RoundedRectangleBorder(

@@ -17,7 +17,7 @@ final String info;
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(10.0)
       ),
-      child: Center(child: Text(info, style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold,),)),
+      child: Center(child: Text(info, style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold,),)),
     );
   }
 }
@@ -34,7 +34,7 @@ class TitleOfBoxWithText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Text(title, style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+      child: Text(title, style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
     );
   }
 }
