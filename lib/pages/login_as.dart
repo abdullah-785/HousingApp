@@ -5,8 +5,6 @@ import 'package:housesales/pages/Register.dart';
 class LoginAs extends StatefulWidget {
   LoginAs({Key? key}) : super(key: key);
 
-  // final String title = "Select";
-
   @override
   State<LoginAs> createState() => _LoginAsState();
 }
@@ -99,34 +97,45 @@ class _LoginAsState extends State<LoginAs> {
                           const SizedBox(
                             height: 15.0,
                           ),
-                          DropdownButton(
-                            elevation: 10,
-                            hint: const Text("Select Type"),
-                            value: valuechoose,
-                            underline: Container(
-                              decoration: const ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                      width: 1.0,
-                                      style: BorderStyle.solid,
-                                      color: Colors.grey),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.0)),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: DropdownButton(
+                              icon: Icon(Icons.arrow_drop_down),
+                              iconSize: 36,
+                              isExpanded: true,
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 122, 121, 121),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold
+                              ),
+                              elevation: 10,
+                              hint: const Text("Select Type"),
+                              value: valuechoose,
+                              underline: Container(
+                                decoration: const ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        width: 1.0,
+                                        style: BorderStyle.solid,
+                                        color: Colors.grey),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                  ),
                                 ),
                               ),
+                              onChanged: (newValue) {
+                                // valuechoose = newValue
+                                setState(() {
+                                  valuechoose = newValue as String?;
+                                });
+                              },
+                              items: ListItem.map((valueItem) {
+                                return DropdownMenuItem(
+                                  value: valueItem,
+                                  child: Text(valueItem),
+                                );
+                              }).toList(),
                             ),
-                            onChanged: (newValue) {
-                              // valuechoose = newValue
-                              setState(() {
-                                valuechoose = newValue as String?;
-                              });
-                            },
-                            items: ListItem.map((valueItem) {
-                              return DropdownMenuItem(
-                                value: valueItem,
-                                child: Text(valueItem),
-                              );
-                            }).toList(),
                           ),
                           const SizedBox(
                             height: 40.0,
@@ -145,18 +154,6 @@ class _LoginAsState extends State<LoginAs> {
                                     ),
                                   ))),
                           const SizedBox(height: 10),
-                          // const Padding(
-                          //   padding: EdgeInsets.only(bottom: 20),
-                          //   child: Text(
-                          //     "Have not Account? Login",
-                          //     style: TextStyle(
-                          //       color: Color.fromARGB(255, 33, 128, 206),
-                          //       fontWeight: FontWeight.bold,
-                          //       fontSize: 18,
-                          //     ),
-
-                          //   ),
-                          // )
                           Padding(
                             padding: const EdgeInsets.only(bottom: 30),
                             child: RichText(
