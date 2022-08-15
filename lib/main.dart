@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:housesales/pages/Register.dart';
-import 'package:housesales/pages/dashboard.dart';
+// import 'package:housesales/pages/Register.dart';
+// import 'package:housesales/pages/dashboard.dart';
 import 'package:housesales/pages/login_as.dart';
-import 'pages/home_page.dart';
-import 'pages/detail_page.dart';
+// import 'pages/home_page.dart';
+// import 'pages/detail_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 
 // void main() {
 //   runApp(const MaterialApp(
@@ -34,13 +34,6 @@ Future main() async {
     // },
   ));
 }
-
-
-
-
-
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

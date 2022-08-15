@@ -22,7 +22,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -48,7 +48,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
           ),
           Text(
             "${loggedInUser.name}",
-            style: TextStyle(color: Colors.white, fontSize: 20),
+            style: const TextStyle(color: Colors.white, fontSize: 20),
           ),
           Text(
             "${loggedInUser.email}",
