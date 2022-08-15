@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../pages/dashboard.dart';
 import '../pages/login_as.dart';
 
 
@@ -110,7 +111,7 @@ class _MyDrawerListState extends State<MyDrawerList> {
               fontWeight: FontWeight.bold
             ),),
             onTap: () {
-              
+               Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard()));
             },
           ),
 
