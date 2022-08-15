@@ -241,45 +241,83 @@ class _RegisterState extends State<Register> {
                                         return;
                                       }
 
-                                      final ref = FirebaseStorage.instance
-                                          .ref()
-                                          .child("userImage")
-                                          .child(DateTime.now().toString());
-                                      await ref.putFile(file!);
-                                      imageUrl = await ref.getDownloadURL();
-                                      await _auth
-                                          .createUserWithEmailAndPassword(
-                                        email: _emailController.text
-                                            .trim()
-                                            .toLowerCase(),
-                                        password:
-                                            _passwordController.text.trim(),
-                                      );
+                                      try {
+                                        if (_passwordController.text.length <=
+                                            7) {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Password at least 8 character");
+                                          return;
+                                        } else if (_emailController.text ==
+                                            null) {
+                                          Fluttertoast.showToast(
+                                              msg: "Please enter email");
+                                          return;
+                                        } else if (_phoneNumerController
+                                                .text.length !=
+                                            11) {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Phone number is not correct");
+                                          return;
+                                        } else if (_passwordController.text !=
+                                            _confirmPasswordController.text) {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Confirm Password is change");
+                                          return;
+                                        } else {
+                                          final ref = FirebaseStorage.instance
+                                              .ref()
+                                              .child("userImage")
+                                              .child(DateTime.now().toString());
+                                          await ref.putFile(file!);
+                                          imageUrl = await ref.getDownloadURL();
+                                          await _auth
+                                              .createUserWithEmailAndPassword(
+                                            email: _emailController.text
+                                                .trim()
+                                                .toLowerCase(),
+                                            password:
+                                                _passwordController.text.trim(),
+                                          );
 
-                                      FirebaseFirestore firebaseFirestore =
-                                          FirebaseFirestore.instance;
-                                      User? user = _auth.currentUser;
+                                          FirebaseFirestore firebaseFirestore =
+                                              FirebaseFirestore.instance;
+                                          User? user = _auth.currentUser;
 
-                                      UserModel userModel = UserModel();
+                                          UserModel userModel = UserModel();
 
-                                      // writing all the values
-                                      userModel.uid = user!.uid;
-                                      userModel.imageUrl = imageUrl;
-                                      userModel.name = _nameController.text;
-                                      userModel.email = _emailController.text;
-                                      userModel.password = _passwordController.text;
-                                      userModel.confirmPassword = _confirmPasswordController.text;
-                                      userModel.phoneNumber = _phoneNumerController.text;
+                                          // writing all the values
+                                          userModel.uid = user!.uid;
+                                          userModel.imageUrl = imageUrl;
+                                          userModel.name = _nameController.text;
+                                          userModel.email =
+                                              _emailController.text;
+                                          userModel.password =
+                                              _passwordController.text;
+                                          userModel.confirmPassword =
+                                              _confirmPasswordController.text;
+                                          userModel.phoneNumber =
+                                              _phoneNumerController.text;
 
-                                      await firebaseFirestore
-                                          .collection("users")
-                                          .doc(user.uid)
-                                          .set(userModel.toMap());
-                                      Fluttertoast.showToast(
-                                          msg:
-                                              "Account created successfully :) ");
+                                          await firebaseFirestore
+                                              .collection("users")
+                                              .doc(user.uid)
+                                              .set(userModel.toMap());
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Account created successfully :) ");
 
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginAs()));
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      LoginAs()));
+                                        }
+                                      } catch (e) {
+                                        Fluttertoast.showToast(msg: "${e}");
+                                      }
                                     },
 
                                     // try {
