@@ -1,6 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:housesales/home_page.dart';
+import 'home_page.dart';
 import 'package:housesales/pages/Register.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginAs extends StatefulWidget {
   LoginAs({Key? key}) : super(key: key);
@@ -10,8 +14,11 @@ class LoginAs extends StatefulWidget {
 }
 
 class _LoginAsState extends State<LoginAs> {
-  List ListItem = ['Login As Buyer', 'Login As Seller'];
-  String? valuechoose;
+  // List ListItem = ['Login As Buyer', 'Login As Seller'];
+  // String? valuechoose;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
 
   // get onChanged => null;
   @override
@@ -21,26 +28,27 @@ class _LoginAsState extends State<LoginAs> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 12.0),
-                child: Row(
-                  children: [
-                    Card(
-                        child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: const Icon(
-                                  Icons.arrow_back,
-                                  size: 30.0,
-                                )))),
-                    // const SizedBox(width: 30,),
-                    // const Text("Login", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 16, 16, 16)),)
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 10, left: 12.0),
+              //   child: Row(
+              //     children: [
+              //       Card(
+              //           child: Padding(
+              //               padding: const EdgeInsets.all(4.0),
+              //               child: IconButton(
+              //                   onPressed: () {
+              //                     Navigator.pop(context);
+              //                   },
+              //                   icon: const Icon(
+              //                     Icons.arrow_back,
+              //                     size: 30.0,
+              //                   )))),
+              //       // const SizedBox(width: 30,),
+              //       // const Text("Login", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 16, 16, 16)),)
+              //     ],
+              //   ),
+              // ),
+              SizedBox(height: 70.0,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: SizedBox(
@@ -69,6 +77,7 @@ class _LoginAsState extends State<LoginAs> {
                             height: 40,
                           ),
                           TextFormField(
+                            controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.email),
@@ -82,6 +91,7 @@ class _LoginAsState extends State<LoginAs> {
                             height: 20.0,
                           ),
                           TextFormField(
+                            controller: _passwordController,
                             keyboardType: TextInputType.emailAddress,
                             obscureText: true,
                             decoration: const InputDecoration(
@@ -97,46 +107,46 @@ class _LoginAsState extends State<LoginAs> {
                           const SizedBox(
                             height: 15.0,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: DropdownButton(
-                              icon: Icon(Icons.arrow_drop_down),
-                              iconSize: 36,
-                              isExpanded: true,
-                              style: const TextStyle(
-                                color: Color.fromARGB(255, 122, 121, 121),
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold
-                              ),
-                              elevation: 10,
-                              hint: const Text("Select Type"),
-                              value: valuechoose,
-                              underline: Container(
-                                decoration: const ShapeDecoration(
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                        width: 1.0,
-                                        style: BorderStyle.solid,
-                                        color: Colors.grey),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5.0)),
-                                  ),
-                                ),
-                              ),
-                              onChanged: (newValue) {
-                                // valuechoose = newValue
-                                setState(() {
-                                  valuechoose = newValue as String?;
-                                });
-                              },
-                              items: ListItem.map((valueItem) {
-                                return DropdownMenuItem(
-                                  value: valueItem,
-                                  child: Text(valueItem),
-                                );
-                              }).toList(),
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(horizontal: 16),
+                          //   child: DropdownButton(
+                          //     icon: Icon(Icons.arrow_drop_down),
+                          //     iconSize: 36,
+                          //     isExpanded: true,
+                          //     style: const TextStyle(
+                          //       color: Color.fromARGB(255, 122, 121, 121),
+                          //       fontSize: 18,
+                          //       fontWeight: FontWeight.bold
+                          //     ),
+                          //     elevation: 10,
+                          //     hint: const Text("Select Type"),
+                          //     value: valuechoose,
+                          //     underline: Container(
+                          //       decoration: const ShapeDecoration(
+                          //         shape: RoundedRectangleBorder(
+                          //           side: BorderSide(
+                          //               width: 1.0,
+                          //               style: BorderStyle.solid,
+                          //               color: Colors.grey),
+                          //           borderRadius:
+                          //               BorderRadius.all(Radius.circular(5.0)),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     onChanged: (newValue) {
+                          //       // valuechoose = newValue
+                          //       setState(() {
+                          //         valuechoose = newValue as String?;
+                          //       });
+                          //     },
+                          //     items: ListItem.map((valueItem) {
+                          //       return DropdownMenuItem(
+                          //         value: valueItem,
+                          //         child: Text(valueItem),
+                          //       );
+                          //     }).toList(),
+                          //   ),
+                          // ),
                           const SizedBox(
                             height: 40.0,
                           ),
@@ -145,7 +155,15 @@ class _LoginAsState extends State<LoginAs> {
                               height: 45.0,
                               child: ElevatedButton(
                                   // margin: EdgeInsets.only(bottom: 10),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _auth.signInWithEmailAndPassword(email: _emailController.text, password:  _passwordController.text).then((uid) =>{
+                                    Fluttertoast.showToast(msg: "LoginSuccessfully"),
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage())),
+                                  }).catchError((e){
+                                    Fluttertoast.showToast(msg: e!.message);
+                                  });
+
+                                  },
                                   child: const Text(
                                     "Login",
                                     style: TextStyle(

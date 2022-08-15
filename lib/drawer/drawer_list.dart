@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/login_as.dart';
@@ -102,15 +103,16 @@ class _MyDrawerListState extends State<MyDrawerList> {
 
           ListTile(
             leading: Icon(
-              Icons.login,
+              Icons.logout,
               size: 38,
             ),
-            title: const Text('Login', style: TextStyle(
+            title: const Text('Logout', style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold
             ),),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => LoginAs()));
+              logout(context);
+              // Navigator.push(context, MaterialPageRoute(builder: (context) => LoginAs()));
             },
           ),
 
@@ -118,5 +120,16 @@ class _MyDrawerListState extends State<MyDrawerList> {
     
       ),
     );
+  }
+
+
+
+
+
+    // the logout function
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginAs()));
   }
 }

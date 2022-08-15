@@ -2,15 +2,16 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:housesales/home_page.dart';
+import 'home_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'dart:io';
-
-
-
-
-
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -21,16 +22,22 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   List ListItem = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
-  String? valuechoose;
+  String? bedroomsvar;
 
   List ListItem2 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
-  String? valuechoose2;
+  String? bathroomsvar;
 
   List ListItem3 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
-  String? valuechoose3;
+  String? garegevar;
 
-  UploadTask? task;
+  TextEditingController _squareFootController = TextEditingController();
+  TextEditingController _amountController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  // UploadTask? task;
   File? file;
+  String? imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -49,28 +56,26 @@ class _DashboardState extends State<Dashboard> {
               children: [
                 HeightBox(15),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     selectFile();
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: 250,
                     decoration: BoxDecoration(
-                      color: Colors.grey,
-                    image: DecorationImage(
-                      image: file == null ? AssetImage("images/uploadImageVector.jpg")
-                      : Image.file(file!).image,
-                    fit: BoxFit.fill,
-                    )
-                    ),
-                    
-                
-                  
+                        color: Colors.grey,
+                        image: DecorationImage(
+                          image: file == null
+                              ? AssetImage("images/uploadImageVector.jpg")
+                              : Image.file(file!).image,
+                          fit: BoxFit.fill,
+                        )),
                   ),
                 ),
                 HeightBox(25),
                 // "Post Now".text.xl4.fontWeight(FontWeight.bold).color(Colors.green).make().centered()
                 TextFormField(
+                  controller: _squareFootController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.square_foot),
@@ -101,7 +106,8 @@ class _DashboardState extends State<Dashboard> {
                                 .fontWeight(FontWeight.bold)
                                 .make(),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               child: DropdownButton(
                                 dropdownColor: Color.fromARGB(255, 81, 208, 85),
                                 icon: Icon(Icons.arrow_drop_down,
@@ -114,7 +120,7 @@ class _DashboardState extends State<Dashboard> {
                                     fontWeight: FontWeight.bold),
                                 elevation: 10,
                                 hint: "1".text.white.make(),
-                                value: valuechoose,
+                                value: bedroomsvar,
                                 underline: Container(
                                   decoration: const ShapeDecoration(
                                     shape: RoundedRectangleBorder(
@@ -122,15 +128,16 @@ class _DashboardState extends State<Dashboard> {
                                           width: 1.0,
                                           style: BorderStyle.solid,
                                           color: Colors.grey),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5.0)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(5.0)),
                                     ),
                                   ),
                                 ),
                                 onChanged: (newValue) {
                                   // valuechoose = newValue
                                   setState(() {
-                                    valuechoose = newValue as String?;
+                                    bedroomsvar = newValue as String?;
+                                    // print(bedroomsvar);
                                   });
                                 },
                                 items: ListItem.map((valueItem) {
@@ -145,14 +152,14 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       )),
                       WidthBox(10),
-        
+
                       // Second Expanded
                       Expanded(
                           child: Container(
                         // width: 10,
                         height: 90,
                         decoration: BoxDecoration(
-                         color: Color.fromARGB(255, 81, 208, 85),
+                          color: Color.fromARGB(255, 81, 208, 85),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(
@@ -164,7 +171,8 @@ class _DashboardState extends State<Dashboard> {
                                 .fontWeight(FontWeight.bold)
                                 .make(),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               child: DropdownButton(
                                 dropdownColor: Color.fromARGB(255, 81, 208, 85),
                                 icon: Icon(Icons.arrow_drop_down,
@@ -177,7 +185,7 @@ class _DashboardState extends State<Dashboard> {
                                     fontWeight: FontWeight.bold),
                                 elevation: 10,
                                 hint: "1".text.white.make(),
-                                value: valuechoose2,
+                                value: bathroomsvar,
                                 underline: Container(
                                   decoration: const ShapeDecoration(
                                     shape: RoundedRectangleBorder(
@@ -185,15 +193,15 @@ class _DashboardState extends State<Dashboard> {
                                           width: 1.0,
                                           style: BorderStyle.solid,
                                           color: Colors.grey),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5.0)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(5.0)),
                                     ),
                                   ),
                                 ),
                                 onChanged: (newValue) {
                                   // valuechoose = newValue
                                   setState(() {
-                                    valuechoose2 = newValue as String?;
+                                    bathroomsvar = newValue as String?;
                                   });
                                 },
                                 items: ListItem2.map((valueItem) {
@@ -207,7 +215,7 @@ class _DashboardState extends State<Dashboard> {
                           ],
                         ),
                       )),
-        
+
                       WidthBox(10),
                       // Third Expanded
                       Expanded(
@@ -227,7 +235,8 @@ class _DashboardState extends State<Dashboard> {
                                 .fontWeight(FontWeight.bold)
                                 .make(),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               child: DropdownButton(
                                 dropdownColor: Color.fromARGB(255, 81, 208, 85),
                                 icon: Icon(Icons.arrow_drop_down,
@@ -240,7 +249,7 @@ class _DashboardState extends State<Dashboard> {
                                     fontWeight: FontWeight.bold),
                                 elevation: 10,
                                 hint: "1".text.white.make(),
-                                value: valuechoose3,
+                                value: garegevar,
                                 underline: Container(
                                   decoration: const ShapeDecoration(
                                     shape: RoundedRectangleBorder(
@@ -248,15 +257,15 @@ class _DashboardState extends State<Dashboard> {
                                           width: 1.0,
                                           style: BorderStyle.solid,
                                           color: Colors.grey),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5.0)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(5.0)),
                                     ),
                                   ),
                                 ),
                                 onChanged: (newValue) {
                                   // valuechoose = newValue
                                   setState(() {
-                                    valuechoose3 = newValue as String?;
+                                    garegevar = newValue as String?;
                                   });
                                 },
                                 items: ListItem3.map((valueItem) {
@@ -274,8 +283,9 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
 
-                HeightBox(15),
+                const HeightBox(15),
                 TextFormField(
+                  controller: _amountController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.price_check),
@@ -286,9 +296,11 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 HeightBox(15),
                 TextFormField(
+                  controller: _descriptionController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: const InputDecoration(
+
                       // prefixIcon: Icon(Icons.price_check),
                       label: Text("Description"),
                       hintText: "Enter other details about your post",
@@ -303,27 +315,63 @@ class _DashboardState extends State<Dashboard> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.green),
-                      
                     ),
-                    onPressed: (){
-                      if(file == null){
-                       Fluttertoast.showToast(msg: "Please Select an Image");
-                       return;
+                    onPressed: () async {
+                      if (file == null) {
+                        Fluttertoast.showToast(msg: "Please Select an Image");
+                        return;
                       }
+                      // print(bedroomsvar);
+                      // print(bathroomsvar);
+                      // print(garegevar);
+                      // print(imageUrl);
+                      // print(_squareFootController.text);
+                      // print(_amountController.text);
+                      // print(_descriptionController.text);
 
+                      try {
+                        final ref = FirebaseStorage.instance
+                            .ref()
+                            .child("postImage")
+                            .child(DateTime.now().toString());
+                        await ref.putFile(file!);
+                        imageUrl = await ref.getDownloadURL();
 
+                        // await _auth.createUserWithEmailAndPassword(
+                        //   email: "first@gmail.com",
+                        //   password: "first12123",
+                        // );
+                        
 
+                        final User? user = _auth.currentUser;
+                        final _uid = user!.uid;
 
-                      // else{
-                      //   print("Successfully done");
-                      // }
-                    // uploadFile();
-                  }, 
-                  child: "Post".text.xl2.fontWeight(FontWeight.bold).make(),
-                  
+                        // FirebaseFirestore.instance.col
+                        FirebaseFirestore.instance
+                            .collection('posts')
+                            .doc(_uid)
+                            .set({
+                          'id': _uid,
+                          'userImage': imageUrl,
+                          'squareFoot': _squareFootController.text,
+                          'bedrooms': bedroomsvar,
+                          'bathrooms': bathroomsvar,
+                          'garege': garegevar,
+                          'amount': _amountController.text,
+                          'description': _descriptionController.text,
+                          'createdAt': Timestamp.now(),
+                        });
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage()));
+                      } catch (error) {
+                        print(error.toString());
+                      }
+                    },
+                    child: "Post".text.xl2.fontWeight(FontWeight.bold).make(),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -332,7 +380,7 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-    Future selectFile() async {
+  Future selectFile() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
 
     if (result == null) return;
@@ -340,7 +388,6 @@ class _DashboardState extends State<Dashboard> {
 
     setState(() => file = File(path));
   }
-
 
 //   Future uploadFile() async{
 //     if (file == null) return;
@@ -352,5 +399,3 @@ class _DashboardState extends State<Dashboard> {
 //   }
 
 }
-
-

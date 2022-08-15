@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:housesales/models/userModel.dart';
+import 'package:housesales/pages/home_page.dart';
 import 'package:housesales/pages/login_as.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart';
@@ -19,8 +21,8 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  List ListItem = ['Login As Buyer', 'Login As Seller'];
-  String? valuechoose;
+  // List ListItem = ['Login As Buyer', 'Login As Seller'];
+  // String? valuechoose;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -28,7 +30,7 @@ class _RegisterState extends State<Register> {
       TextEditingController();
   final TextEditingController _phoneNumerController = TextEditingController();
 
-  UploadTask? task;
+  // UploadTask? task;
   File? file;
   String? imageUrl;
 
@@ -115,12 +117,6 @@ class _RegisterState extends State<Register> {
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(20)))),
-                              validator: (value) {
-                                if (value == null || value.isEmpty && value.length == 6) {
-                                  return 'Minimaum length 8';
-                                }
-                                return null;
-                              },
                             ),
                             const SizedBox(
                               height: 20.0,
@@ -190,47 +186,47 @@ class _RegisterState extends State<Register> {
                             const SizedBox(
                               height: 15.0,
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              child: DropdownButton(
-                                icon: Icon(Icons.arrow_drop_down),
-                                iconSize: 36,
-                                isExpanded: true,
-                                style: const TextStyle(
-                                    color: Color.fromARGB(255, 122, 121, 121),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                                elevation: 10,
-                                hint: const Text("Select Type"),
-                                value: valuechoose,
-                                underline: Container(
-                                  decoration: const ShapeDecoration(
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(
-                                          width: 1.0,
-                                          style: BorderStyle.solid,
-                                          color: Colors.grey),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5.0)),
-                                    ),
-                                  ),
-                                ),
-                                onChanged: (newValue) {
-                                  // valuechoose = newValue
-                                  setState(() {
-                                    valuechoose = newValue as String?;
-                                    // print(valuechoose);
-                                  });
-                                },
-                                items: ListItem.map((valueItem) {
-                                  return DropdownMenuItem(
-                                    value: valueItem,
-                                    child: Text(valueItem),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding:
+                            //       const EdgeInsets.symmetric(horizontal: 16),
+                            //   child: DropdownButton(
+                            //     icon: Icon(Icons.arrow_drop_down),
+                            //     iconSize: 36,
+                            //     isExpanded: true,
+                            //     style: const TextStyle(
+                            //         color: Color.fromARGB(255, 122, 121, 121),
+                            //         fontSize: 18,
+                            //         fontWeight: FontWeight.bold),
+                            //     elevation: 10,
+                            //     hint: const Text("Select Type"),
+                            //     value: valuechoose,
+                            //     underline: Container(
+                            //       decoration: const ShapeDecoration(
+                            //         shape: RoundedRectangleBorder(
+                            //           side: BorderSide(
+                            //               width: 1.0,
+                            //               style: BorderStyle.solid,
+                            //               color: Colors.grey),
+                            //           borderRadius: BorderRadius.all(
+                            //               Radius.circular(5.0)),
+                            //         ),
+                            //       ),
+                            //     ),
+                            //     onChanged: (newValue) {
+                            //       // valuechoose = newValue
+                            //       setState(() {
+                            //         valuechoose = newValue as String?;
+                            //         // print(valuechoose);
+                            //       });
+                            //     },
+                            //     items: ListItem.map((valueItem) {
+                            //       return DropdownMenuItem(
+                            //         value: valueItem,
+                            //         child: Text(valueItem),
+                            //       );
+                            //     }).toList(),
+                            //   ),
+                            // ),
                             const SizedBox(
                               height: 40.0,
                             ),
@@ -244,58 +240,119 @@ class _RegisterState extends State<Register> {
                                             msg: "Please Select an Image");
                                         return;
                                       }
-                                      try {
-                                        if (_passwordController.text ==
-                                            _confirmPasswordController.text ) {
-                                          final ref = FirebaseStorage.instance
-                                              .ref()
-                                              .child("userImage")
-                                              .child(DateTime.now().toString());
-                                          await ref.putFile(file!);
-                                          imageUrl = await ref.getDownloadURL();
-                                          await _auth
-                                              .createUserWithEmailAndPassword(
-                                            email: _emailController.text
-                                                .trim()
-                                                .toLowerCase(),
-                                            password:
-                                                _passwordController.text.trim(),
-                                          );
 
-                                          final User? user = _auth.currentUser;
-                                          final _uid = user!.uid;
-                                          // FirebaseFirestore.instance.col
-                                          FirebaseFirestore.instance
-                                              .collection('users')
-                                              .doc(_uid)
-                                              .set({
-                                            'id': _uid,
-                                            'userImage': imageUrl,
-                                            'name': _nameController.text,
-                                            'email': _emailController.text,
-                                            'password':
-                                                _passwordController.text,
-                                            'phoneNo':
-                                                _phoneNumerController.text,
-                                            'type': valuechoose,
-                                            'createdAt': Timestamp.now(),
-                                          });
-                                          // Navigator.canPop(context) ? Navigator.pop(context) : null;
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      LoginAs()));
-                                        } else {
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "Confirm Password is change");
-                                        }
-                                      } catch (error) {
-                                        Fluttertoast.showToast(
-                                            msg: error.toString());
-                                      }
+                                      final ref = FirebaseStorage.instance
+                                          .ref()
+                                          .child("userImage")
+                                          .child(DateTime.now().toString());
+                                      await ref.putFile(file!);
+                                      imageUrl = await ref.getDownloadURL();
+                                      await _auth
+                                          .createUserWithEmailAndPassword(
+                                        email: _emailController.text
+                                            .trim()
+                                            .toLowerCase(),
+                                        password:
+                                            _passwordController.text.trim(),
+                                      );
+
+                                      FirebaseFirestore firebaseFirestore =
+                                          FirebaseFirestore.instance;
+                                      User? user = _auth.currentUser;
+
+                                      UserModel userModel = UserModel();
+
+                                      // writing all the values
+                                      userModel.uid = user!.uid;
+                                      userModel.imageUrl = imageUrl;
+                                      userModel.name = _nameController.text;
+                                      userModel.email = _emailController.text;
+                                      userModel.password = _passwordController.text;
+                                      userModel.confirmPassword = _confirmPasswordController.text;
+                                      userModel.phoneNumber = _phoneNumerController.text;
+
+                                      await firebaseFirestore
+                                          .collection("users")
+                                          .doc(user.uid)
+                                          .set(userModel.toMap());
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "Account created successfully :) ");
+
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginAs()));
                                     },
+
+                                    // try {
+                                    //   if (_passwordController.text.length <=
+                                    //       7) {
+                                    //     Fluttertoast.showToast(
+                                    //         msg:
+                                    //             "Password at least 8 character");
+                                    //     return;
+                                    //   } else if (_emailController.text ==
+                                    //       null) {
+                                    //     Fluttertoast.showToast(
+                                    //         msg: "Please enter email");
+                                    //     return;
+                                    //   } else if (_phoneNumerController
+                                    //           .text.length !=
+                                    //       11) {
+                                    //     Fluttertoast.showToast(
+                                    //         msg:
+                                    //             "Phone number is not correct");
+                                    //     return;
+                                    //   } else if (_passwordController.text !=
+                                    //       _confirmPasswordController.text) {
+                                    //     Fluttertoast.showToast(
+                                    //         msg:
+                                    //             "Confirm Password is change");
+                                    //     return;
+                                    //   } else {
+                                    //     final ref = FirebaseStorage.instance
+                                    //         .ref()
+                                    //         .child("userImage")
+                                    //         .child(DateTime.now().toString());
+                                    //     await ref.putFile(file!);
+                                    //     imageUrl = await ref.getDownloadURL();
+                                    //     await _auth
+                                    //         .createUserWithEmailAndPassword(
+                                    //       email: _emailController.text
+                                    //           .trim()
+                                    //           .toLowerCase(),
+                                    //       password:
+                                    //           _passwordController.text.trim(),
+                                    //     );
+
+                                    //     final User? user = _auth.currentUser;
+                                    //     final _uid = user!.uid;
+                                    //     // FirebaseFirestore.instance.col
+                                    //     FirebaseFirestore.instance
+                                    //         .collection('users')
+                                    //         .doc(_uid)
+                                    //         .set({
+                                    //       'id': _uid,
+                                    //       'userImage': imageUrl,
+                                    //       'name': _nameController.text,
+                                    //       'email': _emailController.text,
+                                    //       'password':
+                                    //           _passwordController.text,
+                                    //       'phoneNo':
+                                    //           _phoneNumerController.text,
+                                    //       'type': valuechoose,
+                                    //       'createdAt': Timestamp.now(),
+                                    //     });
+                                    //     // Navigator.canPop(context) ? Navigator.pop(context) : null;
+                                    //     Navigator.push(
+                                    //         context,
+                                    //         MaterialPageRoute(
+                                    //             builder: (context) =>
+                                    //                 LoginAs()));
+                                    //   }
+                                    // } catch (error) {
+                                    //   Fluttertoast.showToast(
+                                    //       msg: error.toString());
+                                    // }
+                                    // },
                                     child: const Text(
                                       "Register",
                                       style: TextStyle(

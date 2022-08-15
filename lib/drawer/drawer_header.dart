@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:housesales/models/userModel.dart';
 
 class MyHeaderDrawer extends StatefulWidget {
   const MyHeaderDrawer({Key? key}) : super(key: key);
@@ -8,6 +11,21 @@ class MyHeaderDrawer extends StatefulWidget {
 }
 
 class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,19 +39,19 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
           Container(
             margin: const EdgeInsets.only(bottom: 10),
             height: 90,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: AssetImage('images/profile2.jpg'),
+                image: NetworkImage("${loggedInUser.imageUrl}"),
               ),
             ),
           ),
-          const Text(
-            "Abdullah",
+          Text(
+            "${loggedInUser.name}",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           Text(
-            "abdbutt2001@gmail.com",
+            "${loggedInUser.email}",
             style: TextStyle(
               color: Colors.grey[200],
               fontSize: 14,
