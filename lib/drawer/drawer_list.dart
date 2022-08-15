@@ -100,6 +100,19 @@ class _MyDrawerListState extends State<MyDrawerList> {
               
             },
           ),
+           ListTile(
+            leading: Icon(
+              Icons.create,
+              size: 30,
+            ),
+            title: const Text('Create Post', style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold
+            ),),
+            onTap: () {
+              
+            },
+          ),
 
           ListTile(
             leading: Icon(
