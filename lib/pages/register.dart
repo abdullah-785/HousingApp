@@ -85,12 +85,12 @@ class _RegisterState extends State<Register> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            Text(
+                            const Text(
                               "Register Now",
                               style: TextStyle(
                                   fontSize: 35.0, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 40,
                             ),
                             GestureDetector(
@@ -186,47 +186,7 @@ class _RegisterState extends State<Register> {
                             const SizedBox(
                               height: 15.0,
                             ),
-                            // Padding(
-                            //   padding:
-                            //       const EdgeInsets.symmetric(horizontal: 16),
-                            //   child: DropdownButton(
-                            //     icon: Icon(Icons.arrow_drop_down),
-                            //     iconSize: 36,
-                            //     isExpanded: true,
-                            //     style: const TextStyle(
-                            //         color: Color.fromARGB(255, 122, 121, 121),
-                            //         fontSize: 18,
-                            //         fontWeight: FontWeight.bold),
-                            //     elevation: 10,
-                            //     hint: const Text("Select Type"),
-                            //     value: valuechoose,
-                            //     underline: Container(
-                            //       decoration: const ShapeDecoration(
-                            //         shape: RoundedRectangleBorder(
-                            //           side: BorderSide(
-                            //               width: 1.0,
-                            //               style: BorderStyle.solid,
-                            //               color: Colors.grey),
-                            //           borderRadius: BorderRadius.all(
-                            //               Radius.circular(5.0)),
-                            //         ),
-                            //       ),
-                            //     ),
-                            //     onChanged: (newValue) {
-                            //       // valuechoose = newValue
-                            //       setState(() {
-                            //         valuechoose = newValue as String?;
-                            //         // print(valuechoose);
-                            //       });
-                            //     },
-                            //     items: ListItem.map((valueItem) {
-                            //       return DropdownMenuItem(
-                            //         value: valueItem,
-                            //         child: Text(valueItem),
-                            //       );
-                            //     }).toList(),
-                            //   ),
-                            // ),
+ 
                             const SizedBox(
                               height: 40.0,
                             ),

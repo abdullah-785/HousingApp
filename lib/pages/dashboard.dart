@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:housesales/models/postModel.dart';
 import 'package:uuid/uuid_util.dart';
 import 'home_page.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -14,20 +15,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart';
 
-
 final Reference stroageref = FirebaseStorage.instance.ref();
 // final postRef = FireS.instance;
 final postRef = FirebaseFirestore.instance.collection("posts");
 // String postId = Uuid().v4();
-
-
+// final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
 
   // final User currentUser;
   // Dashboard({this.c})
-
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -36,12 +34,18 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   List ListItem = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
   String? bedroomsvar;
-
-  List ListItem2 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
   String? bathroomsvar;
-
-  List ListItem3 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
   String? garegevar;
+
+  List propertyTypesList = [
+    "House",
+    "Plats",
+    "Shops",
+    "Factories",
+    "Socities",
+    "Flats"
+  ];
+  String? propertyType;
 
   TextEditingController _squareFootController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
@@ -51,9 +55,8 @@ class _DashboardState extends State<Dashboard> {
   // UploadTask? task;
   File? file;
   String? imageUrl;
-  
-  var uuid;
 
+  var uuid;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +101,10 @@ class _DashboardState extends State<Dashboard> {
                       label: Text("Square Foot"),
                       hintText: "1616",
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)))),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                      )),
                 ),
                 HeightBox(15),
                 Padding(
@@ -110,32 +116,41 @@ class _DashboardState extends State<Dashboard> {
                         // width: 10,
                         height: 90,
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 81, 208, 85),
+                          // color: Color,
                           borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 2,
+                              blurRadius: 2,
+                              offset:
+                                  Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
                         ),
                         child: Column(
                           children: [
                             "Bedrooms"
                                 .text
                                 .minFontSize(22)
-                                .color(Colors.white)
+                                .color(Colors.grey)
                                 .fontWeight(FontWeight.bold)
                                 .make(),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16),
                               child: DropdownButton(
-                                dropdownColor: Color.fromARGB(255, 81, 208, 85),
+                                dropdownColor: Colors.white,
                                 icon: Icon(Icons.arrow_drop_down,
-                                    color: Colors.white),
+                                    color: Colors.grey),
                                 iconSize: 36,
                                 isExpanded: true,
                                 style: const TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.grey,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold),
                                 elevation: 10,
-                                hint: "1".text.white.make(),
+                                hint: "0".text.color(Colors.grey).make(),
                                 value: bedroomsvar,
                                 underline: Container(
                                   decoration: const ShapeDecoration(
@@ -175,32 +190,41 @@ class _DashboardState extends State<Dashboard> {
                         // width: 10,
                         height: 90,
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 81, 208, 85),
+                          // color: Color.fromARGB(255, 81, 208, 85),
                           borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 2,
+                              blurRadius: 2,
+                              offset:
+                                  Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
                         ),
                         child: Column(
                           children: [
                             "Bathrooms"
                                 .text
                                 .minFontSize(22)
-                                .color(Colors.white)
+                                .color(Colors.grey)
                                 .fontWeight(FontWeight.bold)
                                 .make(),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16),
                               child: DropdownButton(
-                                dropdownColor: Color.fromARGB(255, 81, 208, 85),
+                                dropdownColor: Colors.white,
                                 icon: Icon(Icons.arrow_drop_down,
-                                    color: Colors.white),
+                                    color: Colors.grey),
                                 iconSize: 36,
                                 isExpanded: true,
                                 style: const TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.grey,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold),
                                 elevation: 10,
-                                hint: "1".text.white.make(),
+                                hint: "0".text.color(Colors.grey).make(),
                                 value: bathroomsvar,
                                 underline: Container(
                                   decoration: const ShapeDecoration(
@@ -220,7 +244,7 @@ class _DashboardState extends State<Dashboard> {
                                     bathroomsvar = newValue as String?;
                                   });
                                 },
-                                items: ListItem2.map((valueItem) {
+                                items: ListItem.map((valueItem) {
                                   return DropdownMenuItem(
                                     value: valueItem,
                                     child: Text(valueItem),
@@ -239,32 +263,41 @@ class _DashboardState extends State<Dashboard> {
                         // width: 10,
                         height: 90,
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 81, 208, 85),
+                          // color: Color.fromARGB(255, 81, 208, 85),
                           borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 2,
+                              blurRadius: 2,
+                              offset:
+                                  Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
                         ),
                         child: Column(
                           children: [
                             "Garege"
                                 .text
                                 .minFontSize(22)
-                                .color(Colors.white)
+                                .color(Colors.grey)
                                 .fontWeight(FontWeight.bold)
                                 .make(),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16),
                               child: DropdownButton(
-                                dropdownColor: Color.fromARGB(255, 81, 208, 85),
+                                dropdownColor: Colors.white,
                                 icon: Icon(Icons.arrow_drop_down,
-                                    color: Colors.white),
+                                    color: Colors.grey),
                                 iconSize: 36,
                                 isExpanded: true,
                                 style: const TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.grey,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold),
                                 elevation: 10,
-                                hint: "1".text.white.make(),
+                                hint: "0".text.color(Colors.grey).make(),
                                 value: garegevar,
                                 underline: Container(
                                   decoration: const ShapeDecoration(
@@ -284,7 +317,7 @@ class _DashboardState extends State<Dashboard> {
                                     garegevar = newValue as String?;
                                   });
                                 },
-                                items: ListItem3.map((valueItem) {
+                                items: ListItem.map((valueItem) {
                                   return DropdownMenuItem(
                                     value: valueItem,
                                     child: Text(valueItem),
@@ -296,6 +329,47 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       )),
                     ],
+                  ),
+                ),
+
+                HeightBox(30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: DropdownButton(
+                    dropdownColor: Colors.white,
+                    icon: Icon(Icons.arrow_drop_down, color: Colors.grey),
+                    iconSize: 36,
+                    isExpanded: true,
+                    style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                    elevation: 10,
+                    hint: "Select Property Type".text.color(Colors.grey).make(),
+                    value: propertyType,
+                    underline: Container(
+                      decoration: const ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                              width: 1.0,
+                              style: BorderStyle.solid,
+                              color: Colors.grey),
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        ),
+                      ),
+                    ),
+                    onChanged: (newValue) {
+                      // valuechoose = newValue
+                      setState(() {
+                        propertyType = newValue as String?;
+                      });
+                    },
+                    items: propertyTypesList.map((valueItem) {
+                      return DropdownMenuItem(
+                        value: valueItem,
+                        child: Text(valueItem),
+                      );
+                    }).toList(),
                   ),
                 ),
 
@@ -337,18 +411,17 @@ class _DashboardState extends State<Dashboard> {
                         Fluttertoast.showToast(msg: "Please Select an Image");
                         return;
                       }
-                      
-                    //  UploadTask uploadTask = stroageref.child("post_$postId.jpg").putFile(file!);
-                    //  TaskSnapshot stroageSnapshot =  await uploadTask;
-                    //  imageUrl =  await stroageSnapshot.ref.getDownloadURL();
 
-                    //    final User? user = _auth.currentUser;
-                    //     final _uid = user!.uid;
+                      //  UploadTask uploadTask = stroageref.child("post_$postId.jpg").putFile(file!);
+                      //  TaskSnapshot stroageSnapshot =  await uploadTask;
+                      //  imageUrl =  await stroageSnapshot.ref.getDownloadURL();
 
-                    //  postRef.doc(user).collection("userPosts").doc(postId).
+                      //    final User? user = _auth.currentUser;
+                      //     final _uid = user!.uid;
 
+                      //  postRef.doc(user).collection("userPosts").doc(postId).
 
-                    String postId = Uuid().v4();
+                      String postId = Uuid().v4();
                       try {
                         final ref = FirebaseStorage.instance
                             .ref()
@@ -356,26 +429,50 @@ class _DashboardState extends State<Dashboard> {
                             .child(DateTime.now().toString());
                         await ref.putFile(file!);
                         imageUrl = await ref.getDownloadURL();
-                        
+
                         final User? user = _auth.currentUser;
                         final _uid = user!.uid;
 
-                        // FirebaseFirestore.instance.col
+                        PostModel postModel = PostModel();
+
+                        postModel.uid = user.uid;
+                        postModel.postId = postId;
+                        postModel.postImageUrl = imageUrl;
+                        postModel.squareFoot = _squareFootController.text;
+                        postModel.bedroomsvar = bedroomsvar;
+                        postModel.bathroomsvar = bathroomsvar;
+                        postModel.garegevar = garegevar;
+                        postModel.propertyType = propertyType;
+                        postModel.amount = _amountController.text;
+                        postModel.description = _descriptionController.text;
+
                         FirebaseFirestore.instance
-                            .collection('posts')
+                            .collection("posts")
                             .doc(postId)
-                            .set({
-                          'id': _uid,
-                          "postId": postId,
-                          'userImage': imageUrl,
-                          'squareFoot': _squareFootController.text,
-                          'bedrooms': bedroomsvar,
-                          'bathrooms': bathroomsvar,
-                          'garege': garegevar,
-                          'amount': _amountController.text,
-                          'description': _descriptionController.text,
-                          'createdAt': Timestamp.now(),
-                        });
+                            .set(postModel.toMap());
+                        Fluttertoast.showToast(msg: "Post are Uploaded ");
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage()));
+
+                        // FirebaseFirestore.instance.col
+                        // FirebaseFirestore.instance
+                        //     .collection('posts')
+                        //     .doc(postId)
+                        //     .set({
+                        //   'id': _uid,
+                        //   "postId": postId,
+                        //   'userImage': imageUrl,
+                        //   'squareFoot': _squareFootController.text,
+                        //   'bedrooms': bedroomsvar,
+                        //   'bathrooms': bathroomsvar,
+                        //   'garege': garegevar,
+                        //   'amount': _amountController.text,
+                        //   'description': _descriptionController.text,
+                        //   'createdAt': Timestamp.now(),
+                        // });
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -403,5 +500,4 @@ class _DashboardState extends State<Dashboard> {
 
     setState(() => file = File(path));
   }
-
 }

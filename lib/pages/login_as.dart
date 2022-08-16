@@ -14,13 +14,12 @@ class LoginAs extends StatefulWidget {
 }
 
 class _LoginAsState extends State<LoginAs> {
-  // List ListItem = ['Login As Buyer', 'Login As Seller'];
-  // String? valuechoose;
+  
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   final _auth = FirebaseAuth.instance;
 
-  // get onChanged => null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,26 +27,6 @@ class _LoginAsState extends State<LoginAs> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 10, left: 12.0),
-              //   child: Row(
-              //     children: [
-              //       Card(
-              //           child: Padding(
-              //               padding: const EdgeInsets.all(4.0),
-              //               child: IconButton(
-              //                   onPressed: () {
-              //                     Navigator.pop(context);
-              //                   },
-              //                   icon: const Icon(
-              //                     Icons.arrow_back,
-              //                     size: 30.0,
-              //                   )))),
-              //       // const SizedBox(width: 30,),
-              //       // const Text("Login", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 16, 16, 16)),)
-              //     ],
-              //   ),
-              // ),
               SizedBox(height: 70.0,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -65,15 +44,15 @@ class _LoginAsState extends State<LoginAs> {
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          Text(
+                          const Text(
                             "Login Now",
                             style: TextStyle(
                                 fontSize: 35.0, fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 40,
                           ),
                           TextFormField(
@@ -107,46 +86,6 @@ class _LoginAsState extends State<LoginAs> {
                           const SizedBox(
                             height: 15.0,
                           ),
-                          // Padding(
-                          //   padding: const EdgeInsets.symmetric(horizontal: 16),
-                          //   child: DropdownButton(
-                          //     icon: Icon(Icons.arrow_drop_down),
-                          //     iconSize: 36,
-                          //     isExpanded: true,
-                          //     style: const TextStyle(
-                          //       color: Color.fromARGB(255, 122, 121, 121),
-                          //       fontSize: 18,
-                          //       fontWeight: FontWeight.bold
-                          //     ),
-                          //     elevation: 10,
-                          //     hint: const Text("Select Type"),
-                          //     value: valuechoose,
-                          //     underline: Container(
-                          //       decoration: const ShapeDecoration(
-                          //         shape: RoundedRectangleBorder(
-                          //           side: BorderSide(
-                          //               width: 1.0,
-                          //               style: BorderStyle.solid,
-                          //               color: Colors.grey),
-                          //           borderRadius:
-                          //               BorderRadius.all(Radius.circular(5.0)),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //     onChanged: (newValue) {
-                          //       // valuechoose = newValue
-                          //       setState(() {
-                          //         valuechoose = newValue as String?;
-                          //       });
-                          //     },
-                          //     items: ListItem.map((valueItem) {
-                          //       return DropdownMenuItem(
-                          //         value: valueItem,
-                          //         child: Text(valueItem),
-                          //       );
-                          //     }).toList(),
-                          //   ),
-                          // ),
                           const SizedBox(
                             height: 40.0,
                           ),

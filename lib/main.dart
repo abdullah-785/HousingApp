@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:housesales/pages/Register.dart';
 import 'package:housesales/pages/dashboard.dart';
 import 'package:housesales/pages/login_as.dart';
+import 'package:housesales/pages/profile.dart';
 import 'pages/home_page.dart';
 import 'pages/detail_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,6 +29,7 @@ Future main() async {
     debugShowCheckedModeBanner: false,
     title: "Housing",
     home: MyApp(),
+    
     // initialRoute: '/',
     // routes: {
     //   '/': (context) => DetailPage()
@@ -42,9 +44,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HomePage();
-    // return LoginAs();
-    // return Register();
-    // return Dashboard();
+    return LoginAs();
   }
 }
