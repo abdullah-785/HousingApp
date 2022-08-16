@@ -2,19 +2,32 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-// import 'package:housesales/home_page.dart';
+import 'package:uuid/uuid_util.dart';
 import 'home_page.dart';
 import 'package:velocity_x/velocity_x.dart';
-// import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'dart:io';
-// import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/uuid.dart';
+
+
+final Reference stroageref = FirebaseStorage.instance.ref();
+// final postRef = FireS.instance;
+final postRef = FirebaseFirestore.instance.collection("posts");
+// String postId = Uuid().v4();
+
+
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
+
+  // final User currentUser;
+  // Dashboard({this.c})
+
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -38,6 +51,9 @@ class _DashboardState extends State<Dashboard> {
   // UploadTask? task;
   File? file;
   String? imageUrl;
+  
+  var uuid;
+
 
   @override
   Widget build(BuildContext context) {
@@ -321,14 +337,18 @@ class _DashboardState extends State<Dashboard> {
                         Fluttertoast.showToast(msg: "Please Select an Image");
                         return;
                       }
-                      // print(bedroomsvar);
-                      // print(bathroomsvar);
-                      // print(garegevar);
-                      // print(imageUrl);
-                      // print(_squareFootController.text);
-                      // print(_amountController.text);
-                      // print(_descriptionController.text);
+                      
+                    //  UploadTask uploadTask = stroageref.child("post_$postId.jpg").putFile(file!);
+                    //  TaskSnapshot stroageSnapshot =  await uploadTask;
+                    //  imageUrl =  await stroageSnapshot.ref.getDownloadURL();
 
+                    //    final User? user = _auth.currentUser;
+                    //     final _uid = user!.uid;
+
+                    //  postRef.doc(user).collection("userPosts").doc(postId).
+
+
+                    String postId = Uuid().v4();
                       try {
                         final ref = FirebaseStorage.instance
                             .ref()
@@ -336,22 +356,17 @@ class _DashboardState extends State<Dashboard> {
                             .child(DateTime.now().toString());
                         await ref.putFile(file!);
                         imageUrl = await ref.getDownloadURL();
-
-                        // await _auth.createUserWithEmailAndPassword(
-                        //   email: "first@gmail.com",
-                        //   password: "first12123",
-                        // );
                         
-
                         final User? user = _auth.currentUser;
                         final _uid = user!.uid;
 
                         // FirebaseFirestore.instance.col
                         FirebaseFirestore.instance
                             .collection('posts')
-                            .doc(_uid)
+                            .doc(postId)
                             .set({
                           'id': _uid,
+                          "postId": postId,
                           'userImage': imageUrl,
                           'squareFoot': _squareFootController.text,
                           'bedrooms': bedroomsvar,
@@ -388,14 +403,5 @@ class _DashboardState extends State<Dashboard> {
 
     setState(() => file = File(path));
   }
-
-//   Future uploadFile() async{
-//     if (file == null) return;
-
-//     final fileName = basename(file!.path);
-//     final destination = 'file/$fileName';
-
-//     FirebaseApi.uploadFile(destination, file!);
-//   }
 
 }

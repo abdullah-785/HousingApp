@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:housesales/pages/dashboard.dart';
 import 'package:housesales/pages/detail_page.dart';
 import 'package:housesales/widgets/buttonsCard.dart';
 import 'package:housesales/widgets/city_name.dart';
@@ -16,6 +17,8 @@ class HomePage extends StatelessWidget {
   const HomePage({
     Key? key,
   }) : super(key: key);
+  
+  
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +204,7 @@ class HomePage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Container(
               child: Column(
-                children: [
+                children: const [
                   MyHeaderDrawer(),
                   MyDrawerList()
                 ],
@@ -209,8 +212,11 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
+        
       ),
+      
     );
+  
   }
 }
 
