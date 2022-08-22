@@ -25,7 +25,8 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(const MaterialApp(
+  runApp( MaterialApp(
+    theme: ThemeData(fontFamily: 'Releway'),
     debugShowCheckedModeBanner: false,
     title: "Housing",
     home: MyApp(),
@@ -40,7 +41,7 @@ Future main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  get mainAxisAlignment => null;
+  // get mainAxisAlignment => null;
 
   @override
   Widget build(BuildContext context) {

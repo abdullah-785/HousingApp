@@ -28,21 +28,21 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
 
-  // User? user = FirebaseAuth.instance.currentUser;
-  // UserModel loggedInUser = UserModel();
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   FirebaseFirestore.instance
-  //       .collection("users")
-  //       .doc(user!.uid)
-  //       .get()
-  //       .then((value) {
-  //     loggedInUser = UserModel.fromMap(value.data());
-  //     setState(() {});
-  //   });
-  // }
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -329,43 +329,12 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           child: Container(
             child: Column(
-              children: const [MyHeaderDrawer(), MyDrawerList()],
+              children:  [
+                MyHeaderDrawer(name: "${loggedInUser.name}", image: "${loggedInUser.imageUrl}", email: "${loggedInUser.email}", ),
+              MyDrawerList()],
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class TopButtons extends StatelessWidget {
-  const TopButtons({
-    Key? key,
-    required this.button1,
-    required this.button2,
-    required this.button3,
-  }) : super(key: key);
-  final String button1;
-  final String button2;
-  final String button3;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ButtonsCard(
-            text: button1,
-          ),
-          ButtonsCard(
-            text: button2,
-          ),
-          ButtonsCard(
-            text: button3,
-          ),
-        ],
       ),
     );
   }
