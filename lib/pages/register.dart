@@ -5,7 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:housesales/models/userModel.dart';
-import 'package:housesales/pages/home_page.dart';
+// import 'package:housesales/pages/home_page.dart';
 import 'package:housesales/pages/login_as.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart';
@@ -88,7 +88,8 @@ class _RegisterState extends State<Register> {
                             const Text(
                               "Register Now",
                               style: TextStyle(
-                                  fontSize: 35.0, fontWeight: FontWeight.bold),
+                                fontFamily: 'GreatVibes-Regular',
+                                  fontSize: 40.0, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(
                               height: 40,

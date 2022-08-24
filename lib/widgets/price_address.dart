@@ -16,7 +16,7 @@ class PriceAddress extends StatelessWidget {
         children:  [
           Padding(
             padding: EdgeInsets.only(left: 16.0, right: 10.0),
-            child: Text(price, style: TextStyle(
+            child: Text("\$"+price, style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 26.0
             ),),

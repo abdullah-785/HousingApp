@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:housesales/models/userModel.dart';
+// import 'package:housesales/models/userModel.dart';
 import 'package:housesales/pages/detail_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -14,7 +14,7 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
-    UserModel usermodel = UserModel();
+    // UserModel usermodel = UserModel();
     return Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
       child: Column(
@@ -27,7 +27,7 @@ class _PostCardState extends State<PostCard> {
                   onTap: () {
                     try{
                       Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailPage(
-                    //   img: Image.network(
+                    //   postImageUrl: Image.network(
                     //   widget.snap['postImageUrl'],
                     //   fit: BoxFit.cover,
                     // ), 
@@ -43,6 +43,7 @@ class _PostCardState extends State<PostCard> {
                     
                     )));
                     }catch(error){
+                      // ignore: avoid_print
                       print(error);
                     }
                   },
@@ -62,14 +63,14 @@ class _PostCardState extends State<PostCard> {
                         alignment: Alignment.topLeft,
                         child: Text(
                           "\$"+widget.snap['amount'].toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 27, fontWeight: FontWeight.bold),
                         ),
                         
                       ),
-                      WidthBox(10),
+                      const WidthBox(10),
                       Text(widget.snap['address'].toString(),
-                      style: TextStyle(fontWeight: FontWeight.bold, 
+                      style: const TextStyle(fontWeight: FontWeight.bold, 
                       color: Colors.grey
                       ),
                       ),
@@ -82,11 +83,11 @@ class _PostCardState extends State<PostCard> {
                     alignment: Alignment.topLeft,
                     child: Text(widget.snap['bedroomsvar'].toString() +" Bedrooms/ "+ widget.snap['bathroomsvar'].toString() +
                      " Bathrooms/ " + widget.snap['squareFoot'].toString() + "sqft", 
-                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                      ),
                   ),
                 ),
-                HeightBox(30),
+                const HeightBox(30),
               ],
             ),
           )

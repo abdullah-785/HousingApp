@@ -1,36 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:housesales/drawer/drawer_header.dart';
+import 'package:housesales/drawer/drawer_list.dart';
 import 'package:housesales/models/postModel.dart';
 import 'package:housesales/models/userModel.dart';
 import 'package:housesales/pages/dashboard.dart';
-import 'package:housesales/pages/detail_page.dart';
-import 'package:housesales/pages/home_p2.dart';
 import 'package:housesales/pages/profile.dart';
-import 'package:housesales/widgets/buttonsCard.dart';
-import 'package:housesales/widgets/city_name.dart';
-import 'package:housesales/widgets/city_word.dart';
-import 'package:housesales/widgets/header_icons.dart';
-import 'package:housesales/widgets/home_details.dart';
-import 'package:housesales/widgets/image_card.dart';
-import 'package:housesales/widgets/price_address.dart';
+import 'package:housesales/widgets/post_card.dart';
 
-import '../drawer/drawer_header.dart';
-import '../drawer/drawer_list.dart';
-
-class HomePage extends StatefulWidget {
-  HomePage({
-    Key? key, this.snap,
-  }) : super(key: key);
-
-final snap;
+class HomeToo extends StatefulWidget {
+  const HomeToo({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeToo> createState() => _HomeTooState();
 }
 
-class _HomePageState extends State<HomePage> {
-  int currentIndex = 0;
+class _HomeTooState extends State<HomeToo> {
+   int currentIndex = 0;
 
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
@@ -49,39 +36,90 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Housing App",
-          style: TextStyle(
-              // fontSize:
-
-              ),
-        ),
+        title: Text("Housing"),
         backgroundColor: Colors.green,
-        toolbarHeight: 60,
       ),
-      body: Column(
-        children: const [
-          City(
-                city: "City",
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+        builder: (context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) => Container(
+              margin: EdgeInsets.symmetric(
               ),
-              //City name
-              CityName(cityName: "Sialkot"),
-              //divider
-              Padding(
-                padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 10),
-                child: Divider(
-                  color: Color.fromARGB(255, 179, 178, 178),
-                ),
+              child: PostCard(
+                snap: snapshot.data!.docs[index].data(),
               ),
-
-              HomeToo(),
+            ),
+          );
+        },
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (index) => setState(()=>  currentIndex = index),
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Color.fromARGB(255, 115, 200, 118),
+        iconSize: 30,
+        
+        
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeToo()));
+              },
+              child: Icon(Icons.home)),
+            label: 'Home',
+            
+          ),
+          BottomNavigationBarItem(
+            icon: GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Dashboard()));
+              },
+              child: Icon(Icons.create)),
+            label: 'Create Post',
+          ),
+          BottomNavigationBarItem(
+            icon: GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> ProfilePage()));
+              },
+              child: Icon(Icons.account_box_rounded)),
+            label: 'Profile',
+          ),
         ],
-      )
-      );
+        // currentIndex: _selectedIndex,
+        // selectedItemColor: Colors.amber[800],
+        // onTap: _onItemTapped,
+      ),
+
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children:  [
+                MyHeaderDrawer(name: "${loggedInUser.name}", image: "${loggedInUser.imageUrl}", email: "${loggedInUser.email}", ),
+              MyDrawerList()],
+            ),
+          ),
+        ),
+      ),
+    );
+
     
   }
 }

@@ -12,7 +12,7 @@ class PostModel {
   String? amount;
   String? description;
   String? address;
-  DateTime? createdAt;
+  String? createdAt;
 
   PostModel({
     this.uid, 

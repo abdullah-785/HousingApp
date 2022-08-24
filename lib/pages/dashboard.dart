@@ -3,9 +3,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:housesales/models/postModel.dart';
-import 'package:housesales/pages/home_p2.dart';
+import 'package:housesales/pages/home_page.dart';
 import 'package:uuid/uuid_util.dart';
-import 'home_page.dart';
+// import 'home_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
@@ -15,6 +15,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart';
+import 'package:intl/intl.dart';
 
 final Reference stroageref = FirebaseStorage.instance.ref();
 final postRef = FirebaseFirestore.instance.collection("posts");
@@ -386,7 +387,6 @@ class _DashboardState extends State<Dashboard> {
                   keyboardType: TextInputType.multiline,
                   // maxLines: null,
                   decoration: const InputDecoration(
-
                       prefixIcon: Icon(Icons.location_city_outlined),
                       label: Text("Location"),
                       hintText: "Enter Property Location",
@@ -443,6 +443,8 @@ class _DashboardState extends State<Dashboard> {
                         final _uid = user!.uid;
 
                         PostModel postModel = PostModel();
+                        DateTime now = DateTime.now();
+                        String formattedDate = DateFormat.yMMMEd().format(now);
 
                         postModel.uid = user.uid;
                         postModel.postId = postId;
@@ -455,10 +457,7 @@ class _DashboardState extends State<Dashboard> {
                         postModel.amount = _amountController.text;
                         postModel.description = _descriptionController.text;
                         postModel.address = _locationController.text;
-                        postModel.createdAt = DateTime.now();
-
-                        // DateTime now = DateTime.now();
-                        // String formattedDate = DateFormat.yMMMEd().format(now);
+                        postModel.createdAt = formattedDate;
 
                         FirebaseFirestore.instance
                             .collection("posts")
@@ -466,10 +465,8 @@ class _DashboardState extends State<Dashboard> {
                             .set(postModel.toMap());
                         Fluttertoast.showToast(msg: "Post are Uploaded ");
 
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeToo()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => HomeToo()));
 
                         // FirebaseFirestore.instance.col
                         // FirebaseFirestore.instance

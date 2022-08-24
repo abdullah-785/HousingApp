@@ -32,9 +32,11 @@ class DetailPage extends StatelessWidget {
           children: [
             Stack(
               children: [
+                // Image.network("${postImageUrl}"),
                 // Image(
                 //   width: MediaQuery.of(context).size.width,
-                //   image: AssetImage("${img}"),
+                //   // image: AssetImage("${postImageUrl}"),
+                //   image: NetworkImage("${postImageUrl}"),
                 // ),
                 DetHeaderIcons(),
               ],
@@ -49,7 +51,7 @@ class DetailPage extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topRight,
                 child: Container(
-                  width: 120.0,
+                  width: 150.0,
                   height: 40.0,
                   decoration: BoxDecoration(
                     color: Colors.grey[100],
@@ -63,12 +65,12 @@ class DetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            const Padding(
+             Padding(
               padding: EdgeInsets.only(left: 16.0, top: 12.0),
               child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    "House Information",
+                    propertyType +" "+ "Information",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0),
                   )),
             ),

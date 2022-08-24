@@ -1,9 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:housesales/pages/home_p2.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:housesales/pages/home_page.dart';
 // import 'package:housesales/home_page.dart';
-import 'home_page.dart';
+// import 'home_page.dart';
 import 'package:housesales/pages/Register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -49,9 +50,12 @@ class _LoginAsState extends State<LoginAs> {
                             height: 20,
                           ),
                           const Text(
-                            "Login Now",
+                            "Login",
                             style: TextStyle(
-                                fontSize: 35.0, fontWeight: FontWeight.bold),
+                              // fontStyle: GoogleFonts.aBeeZee(),
+                              fontFamily: 'GreatVibes-Regular',
+                                fontSize: 45.0, fontWeight: FontWeight.bold,
+                                ),
                           ),
                           const SizedBox(
                             height: 40,
