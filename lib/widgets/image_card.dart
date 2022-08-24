@@ -19,7 +19,7 @@ class ImageCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(25.0),
               child: Image(
-                image: AssetImage(img),
+                image: NetworkImage(img),
               ),
             ),
           ),

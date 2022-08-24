@@ -3,6 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:housesales/models/postModel.dart';
+import 'package:housesales/pages/home_p2.dart';
 import 'package:uuid/uuid_util.dart';
 import 'home_page.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -16,16 +17,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uuid/uuid.dart';
 
 final Reference stroageref = FirebaseStorage.instance.ref();
-// final postRef = FireS.instance;
 final postRef = FirebaseFirestore.instance.collection("posts");
-// String postId = Uuid().v4();
-// final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
-
-  // final User currentUser;
-  // Dashboard({this.c})
+  Dashboard({Key? key}) : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -50,6 +45,7 @@ class _DashboardState extends State<Dashboard> {
   TextEditingController _squareFootController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _locationController = TextEditingController();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   // UploadTask? task;
@@ -386,6 +382,19 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 HeightBox(15),
                 TextFormField(
+                  controller: _locationController,
+                  keyboardType: TextInputType.multiline,
+                  // maxLines: null,
+                  decoration: const InputDecoration(
+
+                      prefixIcon: Icon(Icons.location_city_outlined),
+                      label: Text("Location"),
+                      hintText: "Enter Property Location",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)))),
+                ),
+                HeightBox(15),
+                TextFormField(
                   controller: _descriptionController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
@@ -445,6 +454,11 @@ class _DashboardState extends State<Dashboard> {
                         postModel.propertyType = propertyType;
                         postModel.amount = _amountController.text;
                         postModel.description = _descriptionController.text;
+                        postModel.address = _locationController.text;
+                        postModel.createdAt = DateTime.now();
+
+                        // DateTime now = DateTime.now();
+                        // String formattedDate = DateFormat.yMMMEd().format(now);
 
                         FirebaseFirestore.instance
                             .collection("posts")
@@ -455,7 +469,7 @@ class _DashboardState extends State<Dashboard> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomePage()));
+                                builder: (context) => HomeToo()));
 
                         // FirebaseFirestore.instance.col
                         // FirebaseFirestore.instance
@@ -473,11 +487,12 @@ class _DashboardState extends State<Dashboard> {
                         //   'description': _descriptionController.text,
                         //   'createdAt': Timestamp.now(),
                         // });
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => HomeToo()));
                       } catch (error) {
+                        Fluttertoast.showToast(msg: error.toString());
                         print(error.toString());
                       }
                     },

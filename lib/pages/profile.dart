@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:housesales/drawer/drawer_header.dart';
+import 'package:housesales/models/postModel.dart';
 import 'package:housesales/models/userModel.dart';
+import 'package:housesales/pages/dashboard.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -16,6 +18,10 @@ class _ProfilePageState extends State<ProfilePage> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
+  PostModel postModel = PostModel();
+
+  List<PostModel> posts = [];
+
   @override
   void initState() {
     super.initState();
@@ -28,6 +34,19 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {});
     });
   }
+
+ 
+
+ //////////////////////////////
+ ///
+ getProfilePosts() async{
+  QuerySnapshot snapshot = await postRef.doc(loggedInUser.uid).collection('posts').orderBy('postId').get();
+
+  setState(() {
+    // posts = snapshot.docs.map((e) => Post.fromDocument(doc)).toList();
+  });
+ }
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +72,11 @@ class _ProfilePageState extends State<ProfilePage> {
               fontSize: 25,
               fontWeight: FontWeight.bold,              
               ),),
+
+
+            Container(
+              // child: Image(image: NetworkImage("${snapshot}")),
+            )
           ],
         ),
       ),

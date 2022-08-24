@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:housesales/models/postModel.dart';
 import 'package:housesales/models/userModel.dart';
 import 'package:housesales/pages/dashboard.dart';
 import 'package:housesales/pages/detail_page.dart';
+import 'package:housesales/pages/home_p2.dart';
 import 'package:housesales/pages/profile.dart';
 import 'package:housesales/widgets/buttonsCard.dart';
 import 'package:housesales/widgets/city_name.dart';
@@ -18,8 +20,10 @@ import '../drawer/drawer_list.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({
-    Key? key,
+    Key? key, this.snap,
   }) : super(key: key);
+
+final snap;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -30,6 +34,7 @@ class _HomePageState extends State<HomePage> {
 
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  PostModel postModel = PostModel();
 
   @override
   void initState() {
@@ -58,284 +63,25 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.green,
         toolbarHeight: 60,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              //header icons
-              // const HeaderIcons(),
-              //City word
-              const City(
+      body: Column(
+        children: const [
+          City(
                 city: "City",
               ),
               //City name
-              const CityName(cityName: "Sialkot"),
+              CityName(cityName: "Sialkot"),
               //divider
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 10),
                 child: Divider(
                   color: Color.fromARGB(255, 179, 178, 178),
                 ),
               ),
 
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DetailPage(
-                        img: "images/image_1.jpg",
-                        price: "\$200,000",
-                        address: "Jension MI 49428, SF",
-                        area: "1616",
-                        bathroom: "4",
-                        bedrooms: "2",
-                        timeAgo: "19 hours ago",
-                      ),
-                    ),
-                  );
-                },
-                child: const Padding(
-                  padding: EdgeInsets.only(top: 25.0),
-                  child: ImageCard(
-                    img: "images/image_1.jpg",
-                  ),
-                ),
-              ),
-              //price Address widget
-              const PriceAddress(
-                price: "\$200,000",
-                address: "Jension MI 49428, SF",
-              ),
-              //home Detials widget
-              const HomeDetail(
-                bathrooms: "4 bedrooms / ",
-                bedrooms: "2 bathrooms / ",
-                area: "1616 sqft",
-              ),
-              //image Card Widget
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DetailPage(
-                        img: "images/image_2.jpg",
-                        price: "\$300,000",
-                        address: "Jension MI 49428, SF",
-                        area: "1716",
-                        bathroom: "4",
-                        bedrooms: "7",
-                        timeAgo: "10 hours ago",
-                      ),
-                    ),
-                  );
-                },
-                child: const Padding(
-                  padding: EdgeInsets.only(
-                    top: 30,
-                  ),
-                  child: ImageCard(img: "images/image_2.jpg"),
-                ),
-              ),
-              //price and address
-              const PriceAddress(
-                  price: "\$300,000", address: "Mension JJ 54398, PF"),
-              //home Details widget
-              const HomeDetail(
-                  bedrooms: "7 bedrooms / ",
-                  bathrooms: "4 bathrooms / ",
-                  area: "1716 sqft"),
-
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DetailPage(
-                        img: "images/image_3.jpeg",
-                        price: "\$150,000",
-                        address: "Jension MI 49428, SF",
-                        area: "1816",
-                        bathroom: "2",
-                        bedrooms: "4",
-                        timeAgo: "1 hours ago",
-                      ),
-                    ),
-                  );
-                },
-                child: const Padding(
-                  padding: EdgeInsets.only(
-                    top: 30,
-                  ),
-                  child: ImageCard(img: "images/image_3.jpeg"),
-                ),
-              ),
-              //price and address
-              const PriceAddress(
-                  price: "\$150,000", address: "Mension JJ 54398, PF"),
-              //home Details widget
-              const HomeDetail(
-                  bedrooms: "4 bedrooms / ",
-                  bathrooms: "2 bathrooms / ",
-                  area: "1816 sqft"),
-
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DetailPage(
-                        img: "images/image_4.jpg",
-                        price: "\$400,000",
-                        address: "Jension MI 49428, SF",
-                        area: "2116",
-                        bathroom: "5",
-                        bedrooms: "9",
-                        timeAgo: "21 hours ago",
-                      ),
-                    ),
-                  );
-                },
-                child: const Padding(
-                  padding: EdgeInsets.only(
-                    top: 30,
-                  ),
-                  child: ImageCard(img: "images/image_4.jpg"),
-                ),
-              ),
-              //price and address
-              const PriceAddress(
-                  price: "\$400,000", address: "Mension JJ 54398, PF"),
-              //home Details widget
-              const HomeDetail(
-                  bedrooms: "9 bedrooms / ",
-                  bathrooms: "5 bathrooms / ",
-                  area: "2116 sqft"),
-
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DetailPage(
-                        img: "images/image_5.jpg",
-                        price: "\$350,000",
-                        address: "Jension MI 49428, SF",
-                        area: "1916",
-                        bathroom: "4",
-                        bedrooms: "7",
-                        timeAgo: "15 hours ago",
-                      ),
-                    ),
-                  );
-                },
-                child: const Padding(
-                  padding: EdgeInsets.only(
-                    top: 30,
-                  ),
-                  child: ImageCard(img: "images/image_5.jpg"),
-                ),
-              ),
-              //price and address
-              const PriceAddress(
-                  price: "\$350,000", address: "Mension JJ 54398, PF"),
-              //home Details widget
-              const HomeDetail(
-                  bedrooms: "7 bedrooms / ",
-                  bathrooms: "4 bathrooms / ",
-                  area: "1916 sqft"),
-
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DetailPage(
-                        img: "images/image_6.jpg",
-                        price: "\$700,000",
-                        address: "Jension MI 49428, SF",
-                        area: "2621",
-                        bathroom: "8",
-                        bedrooms: "13",
-                        timeAgo: "5 hours ago",
-                      ),
-                    ),
-                  );
-                },
-                child: const Padding(
-                  padding: EdgeInsets.only(
-                    top: 30,
-                  ),
-                  child: ImageCard(img: "images/image_6.jpg"),
-                ),
-              ),
-              //price and address
-              const PriceAddress(
-                  price: "700,000", address: "Mension JJ 54398, PF"),
-              //home Details widget
-              const HomeDetail(
-                  bedrooms: "13 bedrooms / ",
-                  bathrooms: "8 bathrooms / ",
-                  area: "2621 sqft"),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) => setState(()=>  currentIndex = index),
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.green,
-        unselectedItemColor: Color.fromARGB(255, 115, 200, 118),
-        // showSelectedLabels: false,
-        // showUnselectedLabels: false,
-        iconSize: 30,
-        // backgroundColor: Colors.green,
-        
-        
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
-              },
-              child: Icon(Icons.home)),
-            label: 'Home',
-            
-          ),
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> Dashboard()));
-              },
-              child: Icon(Icons.create)),
-            label: 'Create Post',
-          ),
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> ProfilePage()));
-              },
-              child: Icon(Icons.account_box_rounded)),
-            label: 'Profile',
-          ),
+              HomeToo(),
         ],
-        // currentIndex: _selectedIndex,
-        // selectedItemColor: Colors.amber[800],
-        // onTap: _onItemTapped,
-      ),
-      drawer: Drawer(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children:  [
-                MyHeaderDrawer(name: "${loggedInUser.name}", image: "${loggedInUser.imageUrl}", email: "${loggedInUser.email}", ),
-              MyDrawerList()],
-            ),
-          ),
-        ),
-      ),
-    );
+      )
+      );
+    
   }
 }

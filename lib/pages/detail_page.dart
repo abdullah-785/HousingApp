@@ -7,16 +7,21 @@ import '../detailPageWedgit/detail_text_of_houses.dart';
 
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({ Key? key, required this.img, required this.price, required this.address,
-   required this.timeAgo, required this.area, required this.bedrooms, required this.bathroom }) : super(key: key);
+  const DetailPage({ Key? key, required this.squareFoot, required this.bedroomsvar, required this.bathroomsvar, required this.garegevar, required this.propertyType, required this.amount, required this.description, required this.address, required this.createdAt,  }) : super(key: key);
   
-  final String img;
-  final String price;
+  // final Image postImageUrl;
+  final String squareFoot;
+  final String bedroomsvar;
+  final String bathroomsvar;
+  final String garegevar;
+  final String propertyType;
+  final String amount;
+  final String description;
   final String address;
-  final String timeAgo;
-  final String area;
-  final String bedrooms;
-  final String bathroom;
+  final String createdAt;
+  
+  
+  
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +32,17 @@ class DetailPage extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Image(
-                  width: MediaQuery.of(context).size.width,
-                  image: AssetImage(img),
-                ),
+                // Image(
+                //   width: MediaQuery.of(context).size.width,
+                //   image: AssetImage("${img}"),
+                // ),
                 DetHeaderIcons(),
               ],
             ),
              Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child:
-                  PriceAddress(price: price, address: address),
+                  PriceAddress(price: amount, address: address),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
@@ -52,7 +57,7 @@ class DetailPage extends StatelessWidget {
                   ),
                   child: Center(
                       child: Text(
-                    timeAgo,
+                    createdAt,
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
                   )),
                 ),
@@ -77,7 +82,7 @@ class DetailPage extends StatelessWidget {
                   Column(
                     children:  [
                       DetBoxWithText(
-                        info: area,
+                        info: squareFoot,
                       ),
                       const TitleOfBoxWithText(
                         title: "Square Foot",
@@ -87,7 +92,7 @@ class DetailPage extends StatelessWidget {
                   Column(
                     children: [
                       DetBoxWithText(
-                        info: bedrooms,
+                        info: bedroomsvar,
                       ),
                       const TitleOfBoxWithText(
                         title: "Bedrooms",
@@ -97,7 +102,7 @@ class DetailPage extends StatelessWidget {
                   Column(
                     children:  [
                       DetBoxWithText(
-                        info: bathroom,
+                        info: bathroomsvar,
                       ),
                       const TitleOfBoxWithText(
                         title: "bathrooms",
@@ -106,11 +111,11 @@ class DetailPage extends StatelessWidget {
                   ),
 
                   Column(
-                    children: const [
+                    children: [
                       DetBoxWithText(
-                        info: "1",
+                        info: garegevar,
                       ),
-                      TitleOfBoxWithText(
+                      const TitleOfBoxWithText(
                         title: "Garege",
                       ),
                     ],
@@ -118,8 +123,8 @@ class DetailPage extends StatelessWidget {
                 ],
               ),
             ),
-            const DetialText(),
-            const DetialText(),
+            DetialText(description: description),
+            
             // FloatingActionButton(onPressed: (){},)
           ],
         ),

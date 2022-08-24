@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:housesales/pages/home_p2.dart';
 // import 'package:housesales/home_page.dart';
 import 'home_page.dart';
 import 'package:housesales/pages/Register.dart';
@@ -97,7 +98,7 @@ class _LoginAsState extends State<LoginAs> {
                                   onPressed: () {
                                     _auth.signInWithEmailAndPassword(email: _emailController.text, password:  _passwordController.text).then((uid) =>{
                                     Fluttertoast.showToast(msg: "LoginSuccessfully"),
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage())),
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomeToo())),
                                   }).catchError((e){
                                     Fluttertoast.showToast(msg: e!.message);
                                   });

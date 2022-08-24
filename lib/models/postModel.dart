@@ -11,6 +11,8 @@ class PostModel {
   String? propertyType;
   String? amount;
   String? description;
+  String? address;
+  DateTime? createdAt;
 
   PostModel({
     this.uid, 
@@ -22,7 +24,9 @@ class PostModel {
     this.garegevar, 
     this.propertyType,
     this.amount,
-    this.description
+    this.description,
+    this.address,
+    this.createdAt,
     });
 
   // receiving data from server
@@ -38,6 +42,8 @@ class PostModel {
       propertyType: map['propertyType'],
       amount: map['amount'],
       description: map['description'],
+      address: map["address"],
+      createdAt: map['createdAt'],
     );
   }
 
@@ -53,7 +59,9 @@ class PostModel {
       'garegevar': garegevar,
       'propertyType': propertyType,
       'amount': amount,
-      'description': description
+      'description': description,
+      'address': address,
+      'createdAt': createdAt,
       
     };
   }

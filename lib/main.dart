@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:housesales/pages/Register.dart';
 import 'package:housesales/pages/dashboard.dart';
+import 'package:housesales/pages/home_p2.dart';
 import 'package:housesales/pages/login_as.dart';
 import 'package:housesales/pages/profile.dart';
 import 'pages/home_page.dart';
@@ -20,7 +21,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 //   ));
 // }
 
-Future main() async {
+Future main() async {                                         
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
