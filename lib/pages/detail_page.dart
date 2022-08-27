@@ -4,11 +4,20 @@ import '../detailPageWedgit/boxWithText.dart';
 import '../detailPageWedgit/det_header_icons_.dart';
 import '../detailPageWedgit/detail_text_of_houses.dart';
 
-
-
 class DetailPage extends StatelessWidget {
-  const DetailPage({ Key? key, required this.squareFoot, required this.bedroomsvar, required this.bathroomsvar, required this.garegevar, required this.propertyType, required this.amount, required this.description, required this.address, required this.createdAt,  }) : super(key: key);
-  
+  const DetailPage({
+    Key? key,
+    required this.squareFoot,
+    required this.bedroomsvar,
+    required this.bathroomsvar,
+    required this.garegevar,
+    required this.propertyType,
+    required this.amount,
+    required this.description,
+    required this.address,
+    required this.createdAt,
+  }) : super(key: key);
+
   // final Image postImageUrl;
   final String squareFoot;
   final String bedroomsvar;
@@ -19,9 +28,6 @@ class DetailPage extends StatelessWidget {
   final String description;
   final String address;
   final String createdAt;
-  
-  
-  
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +47,9 @@ class DetailPage extends StatelessWidget {
                 DetHeaderIcons(),
               ],
             ),
-             Padding(
+            Padding(
               padding: const EdgeInsets.only(top: 16.0),
-              child:
-                  PriceAddress(price: amount, address: address),
+              child: PriceAddress(price: amount, address: address),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
@@ -60,18 +65,21 @@ class DetailPage extends StatelessWidget {
                   child: Center(
                       child: Text(
                     createdAt,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16.0),
                   )),
                 ),
               ),
             ),
-             Padding(
+            // ElevatedButton(onPressed: (){}, child: Text("Buy")),
+            Padding(
               padding: EdgeInsets.only(left: 16.0, top: 12.0),
               child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    propertyType +" "+ "Information",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0),
+                    propertyType + " " + "Information",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0),
                   )),
             ),
             const SizedBox(
@@ -82,7 +90,7 @@ class DetailPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Column(
-                    children:  [
+                    children: [
                       DetBoxWithText(
                         info: squareFoot,
                       ),
@@ -102,7 +110,7 @@ class DetailPage extends StatelessWidget {
                     ],
                   ),
                   Column(
-                    children:  [
+                    children: [
                       DetBoxWithText(
                         info: bathroomsvar,
                       ),
@@ -111,7 +119,6 @@ class DetailPage extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   Column(
                     children: [
                       DetBoxWithText(
@@ -126,7 +133,7 @@ class DetailPage extends StatelessWidget {
               ),
             ),
             DetialText(description: description),
-            
+
             // FloatingActionButton(onPressed: (){},)
           ],
         ),

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:housesales/pages/home_page.dart';
-// import 'package:housesales/home_page.dart';
-// import 'home_page.dart';
 import 'package:housesales/pages/Register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

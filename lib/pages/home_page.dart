@@ -18,6 +18,7 @@ class HomeToo extends StatefulWidget {
 
 class _HomeTooState extends State<HomeToo> {
    int currentIndex = 0;
+  //  bool isloading = false;
 
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
@@ -25,6 +26,9 @@ class _HomeTooState extends State<HomeToo> {
 
   @override
   void initState() {
+    setState(() {
+      // isloading = true;
+    });
     super.initState();
     FirebaseFirestore.instance
         .collection("users")
@@ -32,7 +36,9 @@ class _HomeTooState extends State<HomeToo> {
         .get()
         .then((value) {
       loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
+      setState(() {
+        // isloading = false;
+      });
     });
   }
 
@@ -40,7 +46,7 @@ class _HomeTooState extends State<HomeToo> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( 
       appBar: AppBar(
         title: Text("Housing"),
         backgroundColor: Colors.green,
@@ -57,9 +63,9 @@ class _HomeTooState extends State<HomeToo> {
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) => Container(
-              margin: EdgeInsets.symmetric(
+              margin: const EdgeInsets.symmetric(
               ),
-              child: PostCard(
+              child:PostCard(
                 snap: snapshot.data!.docs[index].data(),
               ),
             ),
