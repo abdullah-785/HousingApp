@@ -6,6 +6,8 @@ import 'package:housesales/pages/home_page.dart';
 import 'package:housesales/pages/Register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'forgetpassword.dart';
+
 class LoginAs extends StatefulWidget {
   LoginAs({Key? key}) : super(key: key);
 
@@ -87,11 +89,23 @@ class _LoginAsState extends State<LoginAs> {
                             ),
                           ),
                           const SizedBox(
-                            height: 15.0,
+                            height: 20.0,
+                          ),
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgetPassword()));
+                            },
+                            child: const Text("Forget Password", style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 33, 128, 206)
+                            ),),
                           ),
                           const SizedBox(
-                            height: 40.0,
+                            height: 10.0,
                           ),
+                          
+
                           SizedBox(
                               width: MediaQuery.of(context).size.width * 0.8,
                               height: 45.0,
